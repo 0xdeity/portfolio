@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Dev-Portfolio": {
+    "portfolio-angular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/dev-portfolio",
+            "outputPath": "dist/portfolio-angular",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -32,9 +32,13 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
               "src/styles.scss"
             ],
             "scripts": [
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
@@ -43,13 +47,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "8kb"
                 }
               ],
               "outputHashing": "all"
@@ -69,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Dev-Portfolio:build:production"
+              "browserTarget": "portfolio-angular:build:production"
             },
             "development": {
-              "browserTarget": "Dev-Portfolio:build:development"
+              "browserTarget": "portfolio-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Dev-Portfolio:build"
+            "browserTarget": "portfolio-angular:build"
           }
         },
         "test": {
@@ -106,6 +110,6 @@
     }
   },
   "cli": {
-    "analytics": "c54fb606-bd7d-4d6f-994f-b44012ff5bfa"
+    "analytics": "306447ca-b356-4dca-835c-a546da0a6d82"
   }
 }
