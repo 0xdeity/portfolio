@@ -1,8 +1,34 @@
 <!-- home-wrapper -->
-<div class="home-wrapper overflow-hidden section" id="home">
+<div class="home-wrapper  overflow-hidden section" id="home">
+
+  <!-- left sticky modal dialog -->
+  <div class="modal-container">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary trigger-button" data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop">
+      Overview
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- first-container -->
-  <div class="first-container p-0 d-flex justify-content-center  " id="about">
+  <div class="first-container p-0 d-flex justify-content-center" id="about">
     <!-- Introduction Card -->
     <div class="card text-center bg-transparent" #card
       [ngStyle]="{'transform': 'translate(' + cardPosition.x + 'px, ' + cardPosition.y + 'px)'}">
@@ -212,7 +238,7 @@
   <!-- fourth-container -->
   <div class="fourth-container container mt-5  " id="portfolio">
     <p-carousel [value]="fourthContainerCards" [numVisible]="getColumnsToShow()" [numScroll]="1"
-      [responsiveOptions]="responsiveOptions" [circular]="true" [autoplayInterval]="3000">
+      [responsiveOptions]="responsiveOptions" [circular]="true" [autoplayInterval]="2000">
       <ng-template pTemplate="item" let-card>
         <div class="card m-2 text-center">
           <div class="mb-3">
@@ -233,6 +259,9 @@
 
     </div>
   </div>
+
+
+
 
 
 

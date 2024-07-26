@@ -6,6 +6,7 @@ import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
   getSeverity(arg0: any) {
     throw new Error('Method not implemented.');
   }
@@ -20,9 +21,10 @@ export class HomeComponent implements OnInit {
 
   // Image List
   public imageListVisible: boolean = false;
-  
+
   // Timeline
   public timelineVisible: boolean = false;
+
 
   // Skill Set
   public skillSet: any[] = [
@@ -157,6 +159,8 @@ export class HomeComponent implements OnInit {
 
   }
 
+
+
   //
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
@@ -190,5 +194,6 @@ export class HomeComponent implements OnInit {
   getColumnsToShow() {
     return this.allColumnsExpanded ? this.fourthContainerCards.length : this.initialColumnsToShow;
   }
+
 
 }

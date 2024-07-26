@@ -1,3 +1,27 @@
+// home-wrapper
+.home-wrapper {
+  // position: relative;
+}
+
+.modal-container .trigger-button {
+  position: fixed;
+  top: 50%;
+  left: -125px;
+  z-index: 3;
+  padding: 10px 40px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  transition: left 0.3s ease;
+  background: skyblue;
+  border: none;
+}
+
+.modal-container .trigger-button:hover {
+  left: 0;
+  background: #000;
+  color: #fff;
+}
+
 // first-container
 .home-wrapper {
   background-color: #fff;
