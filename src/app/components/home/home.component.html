@@ -1,25 +1,35 @@
 <!-- home-wrapper -->
-<div class="home-wrapper  overflow-hidden section" id="home">
+<div class="home-wrapper overflow-hidden section" id="home">
 
   <!-- left sticky modal dialog -->
   <div class="modal-container">
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary trigger-button" data-bs-toggle="modal"
-      data-bs-target="#staticBackdrop">
+    <button type="button" class="btn btn-primary trigger-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Overview
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
 
+          <!-- modal-body -->
+          <div class="modal-body mt-5">
+            <div class="bubble-container">
+              <div *ngFor="let bubble of bubbles" class="bubble" (click)="toggleSubBubbles(bubble)">
+                {{ bubble.label }}
+                <div class="sub-bubble-container">
+                  <div *ngFor="let subBubble of bubble.subBubbles" class="sub-bubble"
+                    [class.show]="bubble.showSubBubbles">
+                    {{ subBubble.label }}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

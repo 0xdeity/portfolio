@@ -1,5 +1,16 @@
 import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 
+interface SubBubble {
+  label: string;
+  positionClass: string; // Class to determine position
+}
+
+interface Bubble {
+  label: string;
+  subBubbles: SubBubble[];
+  showSubBubbles: boolean;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,14 +18,14 @@ import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular
 })
 export class HomeComponent implements OnInit {
 
-  getSeverity(arg0: any) {
-    throw new Error('Method not implemented.');
-  }
   @ViewChild('secondContainer', { static: true }) secondContainer!: ElementRef;
   @ViewChild('imageListContainer', { static: true }) imageListContainer!: ElementRef;
   @ViewChild('thirdContainer', { static: true }) thirdContainer!: ElementRef;
   @ViewChild('container', { static: true }) container!: ElementRef;
   @ViewChild('firstContainer', { static: true }) firstContainer!: ElementRef;
+  @ViewChild('modalBubbleContainer', { static: true }) modalBubbleContainer!: ElementRef;
+
+
 
   // Intersection Observer
   public isInView: boolean = false;
@@ -25,6 +36,12 @@ export class HomeComponent implements OnInit {
   // Timeline
   public timelineVisible: boolean = false;
 
+  // bubbles
+  public bubbles: Bubble[] = [
+    { label: 'Full Stack', subBubbles: [], showSubBubbles: true },
+    { label: 'AI', subBubbles: [], showSubBubbles: true },
+    { label: 'Web3', subBubbles: [], showSubBubbles: true }
+  ];
 
   // Skill Set
   public skillSet: any[] = [
@@ -67,16 +84,16 @@ export class HomeComponent implements OnInit {
     { src: '../../../assets/nodejs.png', alt: 'Image 2' },
     { src: '../../../assets/nodejs.png', alt: 'Image 3' },
     { src: '../../../assets/nodejs.png', alt: 'Image 4' },
-    { src: '../../../assets/nodejs.png', alt: 'Image 4' },
-    { src: '../../../assets/nodejs.png', alt: 'Image 4' },
-    { src: '../../../assets/nodejs.png', alt: 'Image 4' },
-    { src: '../../../assets/nodejs.png', alt: 'Image 4' },
-    { src: '../../../assets/nodejs.png', alt: 'Image 4' },
-    { src: '../../../assets/nodejs.png', alt: 'Image 4' },
-    { src: '../../../assets/nodejs.png', alt: 'Image 4' },
-    { src: '../../../assets/nodejs.png', alt: 'Image 4' },
-    { src: '../../../assets/nodejs.png', alt: 'Image 4' },
-    { src: '../../../assets/nodejs.png', alt: 'Image 4' },
+    { src: '../../../assets/nodejs.png', alt: 'Image 5' },
+    { src: '../../../assets/nodejs.png', alt: 'Image 6' },
+    { src: '../../../assets/nodejs.png', alt: 'Image 7' },
+    { src: '../../../assets/nodejs.png', alt: 'Image 8' },
+    { src: '../../../assets/nodejs.png', alt: 'Image 9' },
+    { src: '../../../assets/nodejs.png', alt: 'Image 10' },
+    { src: '../../../assets/nodejs.png', alt: 'Image 11' },
+    { src: '../../../assets/nodejs.png', alt: 'Image 12' },
+    { src: '../../../assets/nodejs.png', alt: 'Image 13' },
+    { src: '../../../assets/nodejs.png', alt: 'Image 14' },
   ];
 
   // Image List - Second Column
@@ -85,32 +102,31 @@ export class HomeComponent implements OnInit {
     { src: '../../../assets/ethereum.png', alt: 'Image 2' },
     { src: '../../../assets/ethereum.png', alt: 'Image 3' },
     { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
-    { src: '../../../assets/ethereum.png', alt: 'Image 4' },
+    { src: '../../../assets/ethereum.png', alt: 'Image 5' },
+    { src: '../../../assets/ethereum.png', alt: 'Image 6' },
+    { src: '../../../assets/ethereum.png', alt: 'Image 7' },
+    { src: '../../../assets/ethereum.png', alt: 'Image 8' },
+    { src: '../../../assets/ethereum.png', alt: 'Image 9' },
+    { src: '../../../assets/ethereum.png', alt: 'Image 10' },
+    { src: '../../../assets/ethereum.png', alt: 'Image 11' },
+    { src: '../../../assets/ethereum.png', alt: 'Image 12' },
+    { src: '../../../assets/ethereum.png', alt: 'Image 13' },
+    { src: '../../../assets/ethereum.png', alt: 'Image 14' },
+    { src: '../../../assets/ethereum.png', alt: 'Image 15' },
   ];
 
   // Fourth Container Cards
   public fourthContainerCards: any[] = [
-    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 1", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa- brands fa - hive", purpose: "Web3, NFT, tokonomics" },
-    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 1", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa- brands fa - hive", purpose: "Web3, NFT, tokonomics" },
-    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 1", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa- brands fa - hive", purpose: "Web3, NFT, tokonomics" },
-    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 1", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa- brands fa - hive", purpose: "Web3, NFT, tokonomics" },
-    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 1", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa- brands fa - hive", purpose: "Web3, NFT, tokonomics" },
-    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 1", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa- brands fa - hive", purpose: "Web3, NFT, tokonomics" },
-    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 1", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa- brands fa - hive", purpose: "Web3, NFT, tokonomics" },
-    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 1", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa- brands fa - hive", purpose: "Web3, NFT, tokonomics" },
-    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 1", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa- brands fa - hive", purpose: "Web3, NFT, tokonomics" },
-    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 1", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa- brands fa - hive", purpose: "Web3, NFT, tokonomics" },
+    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 1", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa-brands fa-hive", purpose: "Web3, NFT, tokonomics" },
+    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 2", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa-brands fa-hive", purpose: "Web3, NFT, tokonomics" },
+    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 3", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa-brands fa-hive", purpose: "Web3, NFT, tokonomics" },
+    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 4", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa-brands fa-hive", purpose: "Web3, NFT, tokonomics" },
+    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 5", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa-brands fa-hive", purpose: "Web3, NFT, tokonomics" },
+    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 6", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa-brands fa-hive", purpose: "Web3, NFT, tokonomics" },
+    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 7", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa-brands fa-hive", purpose: "Web3, NFT, tokonomics" },
+    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 8", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa-brands fa-hive", purpose: "Web3, NFT, tokonomics" },
+    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 9", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa-brands fa-hive", purpose: "Web3, NFT, tokonomics" },
+    { src: "../../../assets/pexels-nietjuh-796602.jpg", alt: "Image 10", title: "lunartoken.co", icon: "fa-brands fa-rust", icon2: "fa-solid fa-bitcoin-sign", icon3: "fa-brands fa-hive", purpose: "Web3, NFT, tokonomics" }
   ];
 
   // Card Position
@@ -122,9 +138,7 @@ export class HomeComponent implements OnInit {
   // Flag to track if all columns are expanded
   allColumnsExpanded: boolean = false;
 
-
-
-  @ViewChild('container', { static: true }) carouselContainer!: ElementRef;
+  @ViewChild('carouselContainer', { static: true }) carouselContainer!: ElementRef;
   products: any;
   responsiveOptions: any;
 
@@ -156,12 +170,18 @@ export class HomeComponent implements OnInit {
 
     thirdContainerObserver.observe(this.thirdContainer.nativeElement);
 
-
+    // Initialize sub-bubbles
+    this.initializeBubbles();
   }
 
 
 
-  //
+  // Method to get the number of columns to display
+  getColumnsToShow() {
+    return this.allColumnsExpanded ? this.fourthContainerCards.length : this.initialColumnsToShow;
+  }
+
+
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
     const card = document.querySelector('.card') as HTMLElement;
@@ -189,11 +209,35 @@ export class HomeComponent implements OnInit {
     }
   }
 
-
-  // Method to get the number of columns to display
-  getColumnsToShow() {
-    return this.allColumnsExpanded ? this.fourthContainerCards.length : this.initialColumnsToShow;
+  // bubbles
+  initializeBubbles() {
+    this.bubbles.forEach(bubble => {
+      if (bubble.label === 'Full Stack') {
+        bubble.subBubbles = [
+          { label: 'Backend', positionClass: 'sub-bubble-left' },
+          { label: 'Frontend', positionClass: 'sub-bubble-right' },
+          { label: 'UI/UX', positionClass: 'sub-bubble-top' },
+          { label: 'Databases', positionClass: 'sub-bubble-bottom' }
+        ];
+      } else if (bubble.label === 'AI') {
+        bubble.subBubbles = [
+          { label: 'Machine Learning', positionClass: 'sub-bubble-left' },
+          { label: 'Deep Learning', positionClass: 'sub-bubble-right' },
+          { label: 'NLP', positionClass: 'sub-bubble-top' },
+          { label: 'Computer Vision', positionClass: 'sub-bubble-bottom' }
+        ];
+      } else if (bubble.label === 'Web3') {
+        bubble.subBubbles = [
+          { label: 'Smart Contracts', positionClass: 'sub-bubble-left' },
+          { label: 'DeFi', positionClass: 'sub-bubble-right' },
+          { label: 'NFTs', positionClass: 'sub-bubble-top' },
+          { label: 'DAOs', positionClass: 'sub-bubble-bottom' }
+        ];
+      }
+    });
   }
 
-
+  toggleSubBubbles(bubble: Bubble) {
+    bubble.showSubBubbles = !bubble.showSubBubbles;
+  }
 }
